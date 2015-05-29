@@ -1,0 +1,24 @@
+[package]
+name = "r2d2_redis"
+version = "0.0.1"
+authors = ["Steven Fackler <sfackler@gmail.com>", "Nev Delap <nevdelap@gmail.com>"]
+license = "MIT"
+description = "Redis support for the r2d2 connection pool"
+repository = "https://github.com/nevdelap/r2d2-redis"
+documentation = "https://nevdelap.github.io/r2d2-redis/doc/r2d2_redis"
+keywords = ["redis", "sql", "pool", "database"]
+
+[lib]
+name = "r2d2_redis"
+path = "src/lib.rs"
+test = false
+
+[[test]]
+name = "test"
+path = "tests/test.rs"
+
+[dependencies]
+r2d2 = "0.5"
+
+[dependencies.redis]
+git = "https://github.com/nevdelap/redis-rs"

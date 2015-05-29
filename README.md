@@ -9,8 +9,6 @@ This version uses [my fork of redis-rs](https://github.com/nevdelap/redis-rs) wh
 
 Documentation is available at https://nevdelap.github.io/r2d2-redis/doc/r2d2_redis
 
-Tickle.
-
 # Example
 
 ```rust

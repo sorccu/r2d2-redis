@@ -12,8 +12,7 @@ use r2d2_redis::RedisConnectionManager;
 fn test_basic() {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
     let config = r2d2::Config::builder().pool_size(2).build();
-    let handler = Box::new(r2d2::NoopErrorHandler);
-    let pool = Arc::new(r2d2::Pool::new(config, manager, handler).unwrap());
+    let pool = Arc::new(r2d2::Pool::new(config, manager).unwrap());
 
     let (s1, r1) = mpsc::channel();
     let (s2, r2) = mpsc::channel();
@@ -44,8 +43,7 @@ fn test_basic() {
 fn test_is_valid() {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
     let config = r2d2::Config::builder().pool_size(1).test_on_check_out(true).build();
-    let handler = Box::new(r2d2::NoopErrorHandler);
-    let pool = r2d2::Pool::new(config, manager, handler).unwrap();
+    let pool = r2d2::Pool::new(config, manager).unwrap();
 
     pool.get().unwrap();
 }

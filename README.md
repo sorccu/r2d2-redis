@@ -5,8 +5,6 @@ r2d2-redis
 
 [redis-rs](https://github.com/mitsuhiko/redis-rs) support library for the [r2d2](https://github.com/sfackler/r2d2) connection pool *totally* based on Steven Fackler's [r2d2-postgres](https://github.com/sfackler/r2d2-postgres). All props to him.
 
-This version uses [my fork of redis-rs](https://github.com/nevdelap/redis-rs) which derives Clone and Debug on its ConnectionInfo.
-
 Documentation is available at https://nevdelap.github.io/r2d2-redis/doc/r2d2_redis
 
 # Example

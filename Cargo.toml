@@ -1,6 +1,6 @@
 [package]
 name = "r2d2_redis"
-version = "0.0.1"
+version = "0.0.2"
 authors = ["Steven Fackler <sfackler@gmail.com>", "Nev Delap <nevdelap@gmail.com>"]
 license = "MIT"
 description = "Redis support for the r2d2 connection pool"
@@ -19,6 +19,4 @@ path = "tests/test.rs"
 
 [dependencies]
 r2d2 = "0.5"
-
-[dependencies.redis]
-git = "https://github.com/nevdelap/redis-rs"
+redis = "0.3.1"

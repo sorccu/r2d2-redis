@@ -1,7 +1,7 @@
 r2d2-redis
 =============
 
-[![travis-ci.org](https://travis-ci.org/nevdelap/r2d2-redis.svg)](https://travis-ci.org/nevdelap/r2d2-redis)[![crates.io](http://meritbadge.herokuapp.com/r2d2-redis)](https://crates.io/crates/r2d2-redis)
+[![travis-ci.org](https://travis-ci.org/nevdelap/r2d2-redis.svg)](https://travis-ci.org/nevdelap/r2d2-redis) [![MIT licensed](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE) [![crates.io](http://meritbadge.herokuapp.com/r2d2-redis)](https://crates.io/crates/r2d2-redis)
 
 [redis-rs](https://github.com/mitsuhiko/redis-rs) support library for the [r2d2](https://github.com/sfackler/r2d2) connection pool *totally* based on Steven Fackler's [r2d2-postgres](https://github.com/sfackler/r2d2-postgres). All props to him.
 

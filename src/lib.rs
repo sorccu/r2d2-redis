@@ -55,8 +55,7 @@ impl error::Error for Error {
 /// fn main() {
 ///     let config = Default::default();
 ///     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
-///     let error_handler = Box::new(r2d2::LoggingErrorHandler);
-///     let pool = Arc::new(r2d2::Pool::new(config, manager, error_handler).unwrap());
+///     let pool = Arc::new(r2d2::Pool::new(config, manager).unwrap());
 ///
 ///     let mut handles = vec![];
 ///
@@ -97,7 +96,7 @@ impl RedisConnectionManager {
     }
 }
 
-impl r2d2::ConnectionManager for RedisConnectionManager {
+impl r2d2::ManageConnection for RedisConnectionManager {
     type Connection = redis::Client;
     type Error = Error;
 

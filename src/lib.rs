@@ -97,10 +97,10 @@ impl RedisConnectionManager {
 }
 
 impl r2d2::ManageConnection for RedisConnectionManager {
-    type Connection = redis::Client;
+    type Connection = redis::Connection;
     type Error = Error;
 
-    fn connect(&self) -> Result<redis::Client, Error> {
+    fn connect(&self) -> Result<redis::Connection, Error> {
         // This pull request: https://github.com/mitsuhiko/redis-rs/pull/47
         // adds #[derive(Clone)] to redis::ConnectionInfo so it can be used here...
         //redis::Client::open(self.connection_info.clone()).map_err(Error::Other)
@@ -111,17 +111,22 @@ impl r2d2::ManageConnection for RedisConnectionManager {
             passwd:  self.connection_info.passwd.clone()
         };
 
-        redis::Client::open(connection_info).map_err(Error::Other)
+        match redis::Client::open(connection_info) {
+            Ok(client) => {
+                client.get_connection().map_err(Error::Other)
+            },
+            Err(err) => Err(Error::Other(err))
+        }
     }
 
-    fn is_valid(&self, conn: &mut redis::Client) -> Result<(), Error> {
+    fn is_valid(&self, conn: &mut redis::Connection) -> Result<(), Error> {
         match redis::cmd("PING").query(conn.deref()) {
             Ok(v) => Ok(v),
             Err(err) => Err(Error::Other(err))
         }
     }
 
-    fn has_broken(&self, _conn: &mut redis::Client) -> bool {
+    fn has_broken(&self, _conn: &mut redis::Connection) -> bool {
         false
     }
 }

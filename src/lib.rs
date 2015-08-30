@@ -106,11 +106,11 @@ impl r2d2::ManageConnection for RedisConnectionManager {
         //redis::Client::open(self.connection_info.clone()).map_err(Error::Other)
         // ...instead of having to do these 7 lines.
         let connection_info = redis::ConnectionInfo {
-            host: self.connection_info.host.clone(),
-            port: self.connection_info.port,
-            db: self.connection_info.db,
-            passwd: self.connection_info.passwd.clone(),
+            addr:    self.connection_info.addr.clone(),
+            db:      self.connection_info.db,
+            passwd:  self.connection_info.passwd.clone()
         };
+
         redis::Client::open(connection_info).map_err(Error::Other)
     }
 

@@ -11,6 +11,8 @@ Documentation is available at [here](https://sorccu.github.io/r2d2-redis/doc/r2d
 
 # Example
 
+You can run this example by cloning the repo and running `cargo run --example ping`.
+
 ```rust
 extern crate r2d2;
 extern crate r2d2_redis;

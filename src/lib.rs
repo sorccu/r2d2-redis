@@ -73,9 +73,7 @@ impl error::Error for Error {
 ///     }
 /// }
 /// ```
-// This pull request: https://github.com/mitsuhiko/redis-rs/pull/47
-// adds #[derive(Debug)] to redis::ConnectionInfo so it can be used here.
-//#[derive(Debug)]
+#[derive(Debug)]
 pub struct RedisConnectionManager {
     connection_info: redis::ConnectionInfo
 }
@@ -101,17 +99,7 @@ impl r2d2::ManageConnection for RedisConnectionManager {
     type Error = Error;
 
     fn connect(&self) -> Result<redis::Connection, Error> {
-        // This pull request: https://github.com/mitsuhiko/redis-rs/pull/47
-        // adds #[derive(Clone)] to redis::ConnectionInfo so it can be used here...
-        //redis::Client::open(self.connection_info.clone()).map_err(Error::Other)
-        // ...instead of having to do these 7 lines.
-        let connection_info = redis::ConnectionInfo {
-            addr:    self.connection_info.addr.clone(),
-            db:      self.connection_info.db,
-            passwd:  self.connection_info.passwd.clone()
-        };
-
-        match redis::Client::open(connection_info) {
+        match redis::Client::open(self.connection_info.clone()) {
             Ok(client) => {
                 client.get_connection().map_err(Error::Other)
             },

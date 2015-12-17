@@ -1,10 +1,19 @@
+sudo: false
+
 language: rust
+
 rust:
-  - nightly
-  - beta
-  - stable
+- nightly
+- beta
+- stable
+
 services:
-  - redis-server
+- redis-server
+
 script:
-  - cargo test
-  - cargo doc --no-deps
+- cargo test
+- cargo doc --no-deps
+
+deploy:
+- provider: script
+  script: .travis/gh-pages.sh

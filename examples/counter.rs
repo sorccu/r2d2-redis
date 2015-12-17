@@ -3,10 +3,11 @@ extern crate r2d2_redis;
 extern crate redis;
 
 use std::default::Default;
-use std::ops::Deref;
 use std::thread;
 
 use r2d2_redis::RedisConnectionManager;
+
+use redis::Commands;
 
 fn main() {
     let config = Default::default();
@@ -19,8 +20,8 @@ fn main() {
         let pool = pool.clone();
         handles.push(thread::spawn(move || {
             let conn = pool.get().unwrap();
-            let reply = redis::cmd("PING").query::<String>(conn.deref()).unwrap();
-            assert_eq!("PONG", reply);
+            let n: i64 = conn.incr("counter", 1).unwrap();
+            println!("Counter increased to {}", n);
         }));
     }
 

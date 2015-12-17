@@ -47,14 +47,14 @@ impl error::Error for Error {
 ///
 /// use std::default::Default;
 /// use std::ops::Deref;
-/// use std::sync::Arc;
 /// use std::thread;
+///
 /// use r2d2_redis::RedisConnectionManager;
 ///
 /// fn main() {
 ///     let config = Default::default();
 ///     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
-///     let pool = Arc::new(r2d2::Pool::new(config, manager).unwrap());
+///     let pool = r2d2::Pool::new(config, manager).unwrap();
 ///
 ///     let mut handles = vec![];
 ///

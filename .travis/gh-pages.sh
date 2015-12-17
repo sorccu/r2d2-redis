@@ -35,7 +35,7 @@ for attempt in 1 2 3; do
 
     rm -rf "${DOC_TARGET}"
     mkdir -p doc
-    mv ../target/doc "${DOC_TARGET}"
+    cp -R ../target/doc "${DOC_TARGET}"
 
     git add -A .
     git commit -m "${COMMIT_MSG}"

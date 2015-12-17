@@ -1,12 +1,17 @@
 [package]
 name = "r2d2_redis"
 version = "0.1.0"
-authors = ["Steven Fackler <sfackler@gmail.com>", "Nev Delap <nevdelap@gmail.com>"]
+authors = [
+    "Steven Fackler <sfackler@gmail.com>",
+    "Nev Delap <nevdelap@gmail.com>",
+    "Simo Kinnunen <simo@shoqolate.com>",
+]
 license = "MIT"
 description = "Redis support for the r2d2 connection pool"
 repository = "https://github.com/sorccu/r2d2-redis"
-documentation = "https://sorccu.github.io/r2d2-redis/doc/r2d2_redis"
-keywords = ["redis", "sql", "pool", "database"]
+documentation = "https://sorccu.github.io/r2d2-redis/doc/master/r2d2_redis/"
+keywords = ["redis", "pool", "database", "r2d2"]
+include = ["src/**/*", "LICENSE", "Cargo.toml"]
 
 [lib]
 name = "r2d2_redis"

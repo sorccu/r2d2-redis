@@ -26,12 +26,12 @@ else
     COMMIT_MSG="Release ${TRAVIS_TAG}"
 fi
 
-rm -rf "doc/${DOC_TARGET}"
-mkdir -p "doc/${DOC_TARGET}"
-cp -r target/doc/ "doc/${DOC_TARGET}/"
+rm -rf "${DOC_TARGET}"
+mkdir -p "${DOC_TARGET}"
+cp -r target/doc/ "${DOC_TARGET}/"
 
-ls -laR "doc/${DOC_TARGET}"
+ls -laR "${DOC_TARGET}"
 
-#git add -A "doc/${DOC_TARGET}"
-#git commit -m "${COMMIT_MSG}"
-#git push
+git add -A "${DOC_TARGET}"
+git commit -m "${COMMIT_MSG}"
+git push origin +gh-pages:refs/heads/gh-pages

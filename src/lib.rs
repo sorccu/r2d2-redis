@@ -7,7 +7,6 @@ extern crate redis;
 use std::error;
 use std::error::Error as _StdError;
 use std::fmt;
-use std::ops::Deref;
 
 /// A unified enum of errors returned by redis::Client
 #[derive(Debug)]
@@ -85,12 +84,9 @@ impl RedisConnectionManager {
     /// types.
     pub fn new<T: redis::IntoConnectionInfo>(params: T)
             -> Result<RedisConnectionManager, redis::RedisError> {
-        match params.into_connection_info() {
-            Ok(connection_info) => Ok(RedisConnectionManager {
-                connection_info: connection_info
-            }),
-            Err(err) => Err(err)
-        }
+        Ok(RedisConnectionManager {
+            connection_info: try!(params.into_connection_info()),
+        })
     }
 }
 
@@ -108,10 +104,7 @@ impl r2d2::ManageConnection for RedisConnectionManager {
     }
 
     fn is_valid(&self, conn: &mut redis::Connection) -> Result<(), Error> {
-        match redis::cmd("PING").query(conn.deref()) {
-            Ok(v) => Ok(v),
-            Err(err) => Err(Error::Other(err))
-        }
+        redis::cmd("PING").query(conn).map_err(Error::Other)
     }
 
     fn has_broken(&self, _conn: &mut redis::Connection) -> bool {

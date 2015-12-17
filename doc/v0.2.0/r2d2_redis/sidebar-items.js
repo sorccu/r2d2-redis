@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Error","A unified enum of errors returned by redis::Client"]],"struct":[["RedisConnectionManager","An `r2d2::ConnectionManager` for `redis::Client`s."]]});

@@ -10,13 +10,11 @@ openssl aes-256-cbc -K "$encrypted_75416a70f63e_key" -iv "$encrypted_75416a70f63
 chmod 600 .travis/deploy_key
 ssh-add .travis/deploy_key
 
-set -x
+git clone --depth 10 --branch gh-pages "git@github.com:${TRAVIS_REPO_SLUG}.git" gh-pages
+cd gh-pages
 
 git config user.name "$(git --no-pager show -s --format='%an' HEAD) (via Travis CI)"
 git config user.email "$(git --no-pager show -s --format='%ae' HEAD)"
-
-git clone --depth 10 --branch gh-pages "git@github.com:${TRAVIS_REPO_SLUG}.git" gh-pages
-cd gh-pages
 
 if [ -z "$TRAVIS_TAG" ]; then
     DOC_TARGET="doc/${TRAVIS_BRANCH}"

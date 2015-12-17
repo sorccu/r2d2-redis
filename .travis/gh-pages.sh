@@ -15,8 +15,8 @@ set -x
 git config user.name "$(git --no-pager show -s --format='%an' HEAD) (via Travis CI)"
 git config user.email "$(git --no-pager show -s --format='%ae' HEAD)"
 
-git fetch origin --depth 10 +refs/heads/gh-pages:gh-pages
-git checkout gh-pages
+git clone --depth 10 --branch gh-pages "git@github.com:${TRAVIS_REPO_SLUG}.git" gh-pages
+cd gh-pages
 
 if [ -z "$TRAVIS_TAG" ]; then
     DOC_TARGET="doc/${TRAVIS_BRANCH}"
@@ -28,10 +28,8 @@ fi
 
 rm -rf "${DOC_TARGET}"
 mkdir -p "${DOC_TARGET}"
-cp -r target/doc/ "${DOC_TARGET}/"
+mv ../target/doc "${DOC_TARGET}"
 
-ls -laR "${DOC_TARGET}"
-
-git add -A "${DOC_TARGET}"
+git add -A .
 git commit -m "${COMMIT_MSG}"
-git push origin +gh-pages:refs/heads/gh-pages
+git push

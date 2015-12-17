@@ -19,11 +19,11 @@ git fetch origin --depth 10 +refs/heads/gh-pages:gh-pages
 git checkout gh-pages
 
 if [ -z "$TRAVIS_TAG" ]; then
-    DOC_TARGET="doc/${TRAVIS_TAG}"
-    COMMIT_MSG="Release ${TRAVIS_TAG}"
-else
     DOC_TARGET="doc/${TRAVIS_BRANCH}"
     COMMIT_MSG="Rebuild pages at ${TRAVIS_COMMIT}"
+else
+    DOC_TARGET="doc/${TRAVIS_TAG}"
+    COMMIT_MSG="Release ${TRAVIS_TAG}"
 fi
 
 rm -rf "doc/${DOC_TARGET}"

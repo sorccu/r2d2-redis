@@ -15,9 +15,9 @@ set -x
 git config user.name "$(git --no-pager show -s --format='%an' HEAD) (via Travis CI)"
 git config user.email "$(git --no-pager show -s --format='%ae' HEAD)"
 
+git fetch --depth 10 origin gh-pages
 git checkout gh-pages
-
-git pull --ff-only
+git merge --ff-only origin/gh-pages
 
 if [ -z "$TRAVIS_TAG" ]; then
     DOC_TARGET="doc/${TRAVIS_TAG}"

@@ -4,8 +4,8 @@ version = "0.1.0"
 authors = ["Steven Fackler <sfackler@gmail.com>", "Nev Delap <nevdelap@gmail.com>"]
 license = "MIT"
 description = "Redis support for the r2d2 connection pool"
-repository = "https://github.com/nevdelap/r2d2-redis"
-documentation = "https://nevdelap.github.io/r2d2-redis/doc/r2d2_redis"
+repository = "https://github.com/sorccu/r2d2-redis"
+documentation = "https://sorccu.github.io/r2d2-redis/doc/r2d2_redis"
 keywords = ["redis", "sql", "pool", "database"]
 
 [lib]

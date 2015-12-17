@@ -8,5 +8,3 @@ services:
 script:
   - cargo test
   - cargo doc --no-deps
-after_success:
-  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && test $TRAVIS_RUST_VERSION == "nightly" && ./.travis/update_docs.sh

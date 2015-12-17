@@ -1,5 +1,5 @@
 //! Redis support for the `r2d2` connection pool.
-#![doc(html_root_url="https://sorccu.github.io/r2d2-redis/doc/master")]
+#![doc(html_root_url="https://sorccu.github.io/r2d2-redis/doc/v0.2.0")]
 #![warn(missing_docs)]
 extern crate r2d2;
 extern crate redis;

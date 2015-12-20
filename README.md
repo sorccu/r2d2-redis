@@ -82,6 +82,8 @@ fn main() {
         handles.push(thread::spawn(move || {
             let conn = pool.get().unwrap();
             let reply = redis::cmd("PING").query::<String>(conn.deref()).unwrap();
+            // Alternatively, without deref():
+            // let reply = redis::cmd("PING").query::<String>(&*conn).unwrap();
             assert_eq!("PONG", reply);
         }));
     }

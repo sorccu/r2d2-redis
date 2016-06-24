@@ -17,7 +17,10 @@ pub enum Error {
 
 impl fmt::Display for Error {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
-        write!(fmt, "{}: {}", self.description(), self.cause().unwrap())
+        match self.cause() {
+            Some(cause) => write!(fmt, "{}: {}", self.description(), cause),
+            None => write!(fmt, "{}", self.description()),
+        }
     }
 }
 

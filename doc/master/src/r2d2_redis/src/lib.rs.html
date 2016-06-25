@@ -157,6 +157,9 @@
 <span id="113">113</span>
 <span id="114">114</span>
 <span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
 </pre><pre class='rust '>
 <span class='doccomment'>//! Redis support for the `r2d2` connection pool.</span>
 <span class='attribute'>#<span class='op'>!</span>[<span class='ident'>doc</span>(<span class='ident'>html_root_url</span><span class='op'>=</span><span class='string'>&quot;https://sorccu.github.io/r2d2-redis/doc/v0.2.0&quot;</span>)]</span>
@@ -177,7 +180,10 @@
 
 <span class='kw'>impl</span> <span class='ident'>fmt</span>::<span class='ident'>Display</span> <span class='kw'>for</span> <span class='ident'>Error</span> {
     <span class='kw'>fn</span> <span class='ident'>fmt</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>fmt</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>fmt</span>::<span class='ident'>Formatter</span>) <span class='op'>-&gt;</span> <span class='ident'>fmt</span>::<span class='prelude-ty'>Result</span> {
-        <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmt</span>, <span class='string'>&quot;{}: {}&quot;</span>, <span class='self'>self</span>.<span class='ident'>description</span>(), <span class='self'>self</span>.<span class='ident'>cause</span>().<span class='ident'>unwrap</span>())
+        <span class='kw'>match</span> <span class='self'>self</span>.<span class='ident'>cause</span>() {
+            <span class='prelude-val'>Some</span>(<span class='ident'>cause</span>) <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmt</span>, <span class='string'>&quot;{}: {}&quot;</span>, <span class='self'>self</span>.<span class='ident'>description</span>(), <span class='ident'>cause</span>),
+            <span class='prelude-val'>None</span> <span class='op'>=&gt;</span> <span class='macro'>write</span><span class='macro'>!</span>(<span class='ident'>fmt</span>, <span class='string'>&quot;{}&quot;</span>, <span class='self'>self</span>.<span class='ident'>description</span>()),
+        }
     }
 }
 
@@ -270,7 +276,7 @@
     }
 
     <span class='kw'>fn</span> <span class='ident'>has_broken</span>(<span class='kw-2'>&amp;</span><span class='self'>self</span>, <span class='ident'>_conn</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>redis</span>::<span class='ident'>Connection</span>) <span class='op'>-&gt;</span> <span class='ident'>bool</span> {
-        <span class='boolvalue'>false</span>
+        <span class='bool-val'>false</span>
     }
 }
 </pre>

@@ -1,0 +1,3 @@
+var searchIndex = {};
+searchIndex["r2d2_redis"] = {"doc":"Redis support for the `r2d2` connection pool.","items":[[3,"RedisConnectionManager","r2d2_redis","An `r2d2::ConnectionManager` for `redis::Client`s.",null,null],[4,"Error","","A unified enum of errors returned by redis::Client",null,null],[13,"Other","","A redis::RedisError",0,null],[11,"fmt","","",0,null],[11,"fmt","","",0,null],[11,"description","","",0,null],[11,"cause","","",0,null],[11,"fmt","","",1,null],[11,"new","","Creates a new `RedisConnectionManager`.",1,{"inputs":[{"name":"t"}],"output":{"name":"result"}}],[11,"connect","","",1,null],[11,"is_valid","","",1,null],[11,"has_broken","","",1,null]],"paths":[[4,"Error"],[3,"RedisConnectionManager"]]};
+initSearch(searchIndex);

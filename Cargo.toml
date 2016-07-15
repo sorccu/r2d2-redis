@@ -1,6 +1,6 @@
 [package]
 name = "r2d2_redis"
-version = "0.3.1"
+version = "0.4.0"
 authors = [
     "Steven Fackler <sfackler@gmail.com>",
     "Nev Delap <nevdelap@gmail.com>",

@@ -5,7 +5,7 @@ r2d2-redis
 
 [redis-rs](https://github.com/mitsuhiko/redis-rs) support library for the [r2d2](https://github.com/sfackler/r2d2) connection pool *totally* based on Steven Fackler's [r2d2-postgres](https://github.com/sfackler/r2d2-postgres). All props to him.
 
-Documentation is available at [here](https://sorccu.github.io/r2d2-redis/doc/v0.5.0/r2d2_redis/).
+Documentation is available at [here](https://sorccu.github.io/r2d2-redis/doc/v0.5.1/r2d2_redis/).
 
 [r2d2-redis](https://github.com/sorccu/r2d2-redis) was originally developed by [@nevdelap](https://github.com/nevdelap), who has since transferred the repo here due to no longer having enough time to maintain it. Thanks for all your hard work, [@nevdelap](https://github.com/nevdelap)!
 

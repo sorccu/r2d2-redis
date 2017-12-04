@@ -89,7 +89,7 @@ h2 {
 h3 {
 	font-size: 1.3em;
 }
-h1, h2, h3:not(.impl):not(.method):not(.type):not(.tymethod), h4:not(.method):not(.type):not(.tymethod) {
+h1, h2, h3:not(.impl):not(.method):not(.type):not(.tymethod):not(.important), h4:not(.method):not(.type):not(.tymethod):not(.associatedconstant) {
 	font-weight: 500;
 	margin: 20px 0 15px 0;
 	padding-bottom: 6px;
@@ -99,10 +99,10 @@ h1.fqn {
 	margin-top: 0;
 	position: relative;
 }
-h2, h3:not(.impl):not(.method):not(.type):not(.tymethod), h4:not(.method):not(.type):not(.tymethod) {
+h2, h3:not(.impl):not(.method):not(.type):not(.tymethod), h4:not(.method):not(.type):not(.tymethod):not(.associatedconstant) {
 	border-bottom: 1px solid;
 }
-h3.impl, h3.method, h4.method, h3.type, h4.type {
+h3.impl, h3.method, h4.method, h3.type, h4.type, h4.associatedconstant {
 	font-weight: 600;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -111,7 +111,10 @@ h3.impl, h3.method, h4.method, h3.type, h4.type {
 h3.impl, h3.method, h3.type {
 	margin-top: 15px;
 }
-h1, h2, h3, h4, .sidebar, a.source, .search-input, .content table :not(code)>a, .collapse-toggle {
+
+h1, h2, h3, h4,
+.sidebar, a.source, .search-input, .content table :not(code)>a,
+.collapse-toggle, ul.item-list > li > .out-of-band {
 	font-family: "Fira Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
@@ -126,6 +129,10 @@ p {
 	margin: 0 0 .6em 0;
 }
 
+summary {
+	outline: none;
+}
+
 code, pre {
 	font-family: "Source Code Pro", Menlo, Monaco, Consolas, "DejaVu Sans Mono", Inconsolata, monospace;
 	white-space: pre-wrap;
@@ -134,14 +141,17 @@ code, pre {
 	border-radius: 3px;
 	padding: 0 0.2em;
 }
-.docblock pre code, .docblock-short pre code {
+.docblock pre code, .docblock-short pre code, .docblock code.spotlight {
 	padding: 0;
+}
+.docblock code.spotlight :last-child {
+	padding-bottom: 0.6em;
 }
 pre {
 	padding: 14px;
 }
 
-.source pre {
+.source .content pre {
 	padding: 20px;
 }
 
@@ -149,7 +159,7 @@ img {
 	max-width: 100%;
 }
 
-.content.source {
+.source .content {
 	margin-top: 50px;
 	max-width: none;
 	overflow: visible;
@@ -164,10 +174,15 @@ nav.sub {
 
 .sidebar {
 	width: 200px;
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
-	min-height: 100%;
+	height: 100vh;
+	overflow: auto;
+}
+
+.sidebar .current {
+	margin-right: -20px;
 }
 
 .content, nav { max-width: 960px; }
@@ -176,24 +191,37 @@ nav.sub {
 
 .js-only, .hidden { display: none !important; }
 
-.sidebar {
-	padding: 10px;
-}
 .sidebar img {
 	margin: 20px auto;
 	display: block;
+	margin-top: 10px;
 }
 
 .sidebar .location {
+	border: 1px solid;
 	font-size: 17px;
-	margin: 30px 0 20px 0;
+	margin: 30px 10px 20px 10px;
 	text-align: center;
+	word-wrap: break-word;
+}
+
+.sidebar .version {
+	font-size: 15px;
+	text-align: center;
+	border-bottom: #DDDDDD 1px solid;
+	overflow-wrap: break-word;
+	word-wrap: break-word; /* deprecated */
+	word-break: break-word; /* Chrome, non-standard */
+}
+
+.location:empty {
+	border: none;
 }
 
 .location a:first-child { font-weight: 500; }
 
 .block {
-	padding: 0 10px;
+	padding: 0;
 	margin-bottom: 14px;
 }
 .block h2, .block h3 {
@@ -202,7 +230,7 @@ nav.sub {
 	text-align: center;
 }
 .block ul, .block li {
-	margin: 0;
+	margin: 0 10px;
 	padding: 0;
 	list-style: none;
 }
@@ -218,14 +246,34 @@ nav.sub {
 	transition: border 500ms ease-out;
 }
 
+.sidebar-title {
+	border-top: 1px solid #777;
+	border-bottom: 1px solid #777;
+	text-align: center;
+	font-size: 17px;
+	margin-bottom: 5px;
+}
+
+.sidebar-links {
+	margin-bottom: 15px;
+}
+
+.sidebar-links > a {
+	padding-left: 10px;
+	width: 100%;
+}
+
 .content {
 	padding: 15px 0;
 }
 
-.content.source pre.rust {
+.source .content pre.rust {
 	white-space: pre;
 	overflow: auto;
 	padding-left: 0;
+}
+#search {
+	margin-left: 230px;
 }
 .content pre.line-numbers {
 	float: left;
@@ -261,12 +309,17 @@ nav.sub {
 	border-bottom: 1px solid;
 }
 
-.docblock h1 { font-size: 1.3em; }
-.docblock h2 { font-size: 1.15em; }
-.docblock h3, .docblock h4, .docblock h5 { font-size: 1em; }
+#main > .docblock h1 { font-size: 1.3em; }
+#main > .docblock h2 { font-size: 1.15em; }
+#main > .docblock h3, #main > .docblock h4, #main > .docblock h5 { font-size: 1em; }
+
+.docblock h1 { font-size: 1em; }
+.docblock h2 { font-size: 0.95em; }
+.docblock h3, .docblock h4, .docblock h5 { font-size: 0.9em; }
 
 .docblock {
 	margin-left: 24px;
+	position: relative;
 }
 
 .content .out-of-band {
@@ -282,6 +335,14 @@ nav.sub {
 
 h3.impl > .out-of-band {
 	font-size: 21px;
+}
+
+h4.method > .out-of-band {
+	font-size: 19px;
+}
+
+ul.item-list > li > .out-of-band {
+	font-size: 19px;
 }
 
 h4 > code, h3 > code, .invisible > code {
@@ -301,6 +362,10 @@ h4 > code, h3 > code, .invisible > code {
 .content .in-band {
 	margin: 0px;
 	padding: 0px;
+	display: inline-block;
+}
+
+.in-band > code {
 	display: inline-block;
 }
 
@@ -348,7 +413,7 @@ h4 > code, h3 > code, .invisible > code {
 	padding: 0;
 }
 
-.content .item-list li { margin-bottom: 3px; }
+.content .item-list li { margin-bottom: 1em; }
 
 .content .multi-column {
 	-moz-column-count: 5;
@@ -368,31 +433,23 @@ h4 > code, h3 > code, .invisible > code {
 .content .method .where,
 .content .fn .where,
 .content .where.fmt-newline {
-    display: block;
-}
-/* Bit of whitespace to indent it */
-.content .method .where::before,
-.content .fn .where::before,
-.content .where.fmt-newline::before {
-    content: '  ';
+	display: block;
+	color: #4E4C4C;
+	font-size: 0.8em;
 }
 
-.content .methods > div { margin-left: 40px; }
+.content .methods > div:not(.important-traits) { margin-left: 40px; }
 
 .content .impl-items .docblock, .content .impl-items .stability {
 	margin-left: 40px;
+	margin-bottom: .6em;
 }
-.content .impl-items .method, .content .impl-items > .type {
+.content .impl-items .method, .content .impl-items > .type, .impl-items > .associatedconstant {
 	margin-left: 20px;
 }
 
 .content .stability code {
 	font-size: 90%;
-}
-
-/* Shift where in trait listing down a line */
-pre.trait .where::before {
-	content: '\a         ';
 }
 
 nav {
@@ -426,14 +483,30 @@ a {
 	background: transparent;
 }
 
+.small-section-header:hover > .anchor {
+	display: initial;
+}
+
+.in-band:hover > .anchor {
+	display: inline-block;
+	position: absolute;
+}
+.anchor {
+	display: none;
+	position: absolute;
+	left: -25px;
+}
+.anchor.field {
+	left: -20px;
+}
+.anchor:before {
+	content: '\2002\00a7\2002';
+}
+
 .docblock a:hover, .docblock-short a:hover, .stability a {
 	text-decoration: underline;
 }
 
-.content span.enum, .content a.enum, .block a.current.enum { color: #5e9766; }
-.content span.struct, .content a.struct, .block a.current.struct { color: #df3600; }
-.content span.type, .content a.type, .block a.current.type { color: #e57300; }
-.content span.macro, .content a.macro, .block a.current.macro { color: #068000; }
 .block a.current.crate { font-weight: 500; }
 
 .search-input {
@@ -476,7 +549,8 @@ a {
 .content .search-results td:first-child { padding-right: 0; }
 .content .search-results td:first-child a { padding-right: 10px; }
 
-tr.result span.primitive::after { content: ' (primitive type)'; font-style: italic; color: black;
+tr.result span.primitive::after {
+	content: ' (primitive type)'; font-style: italic; color: black;
 }
 
 body.blur > :not(#help) {
@@ -497,30 +571,29 @@ body.blur > :not(#help) {
 }
 #help > div {
 	flex: 0 0 auto;
-	background: #e9e9e9;
 	box-shadow: 0 0 6px rgba(0,0,0,.2);
 	width: 550px;
-	height: 330px;
-	border: 1px solid #bfbfbf;
+	height: 354px;
+	border: 1px solid;
 }
 #help dt {
 	float: left;
 	border-radius: 4px;
-	border: 1px solid #bfbfbf;
-	background: #fff;
+	border: 1px solid;
 	width: 23px;
 	text-align: center;
 	clear: left;
 	display: block;
 	margin-top: -1px;
 }
-#help dd { margin: 5px 33px; }
+#help dd { margin: 5px 35px; }
 #help .infos { padding-left: 0; }
 #help h1, #help h2 { margin-top: 0; }
 #help > div div {
 	width: 50%;
 	float: left;
 	padding: 20px;
+	padding-left: 17px;
 }
 
 .stab {
@@ -558,7 +631,6 @@ body.blur > :not(#help) {
 .since {
 	font-weight: normal;
 	font-size: initial;
-	color: grey;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -580,24 +652,11 @@ td.summary-column {
 	padding-right: 0px;
 }
 
-.line-numbers :target { background-color: transparent; }
-
-/* Code highlighting */
-pre.rust .kw { color: #8959A8; }
-pre.rust .kw-2, pre.rust .prelude-ty { color: #4271AE; }
-pre.rust .number, pre.rust .string { color: #718C00; }
-pre.rust .self, pre.rust .bool-val, pre.rust .prelude-val,
-pre.rust .attribute, pre.rust .attribute .ident { color: #C82829; }
-pre.rust .macro, pre.rust .macro-nonterminal { color: #3E999F; }
-pre.rust .lifetime { color: #B76514; }
 pre.rust .question-mark {
-	color: #ff9011;
 	font-weight: bold;
 }
 
-pre.rust { position: relative; }
 a.test-arrow {
-	background-color: rgba(78, 139, 202, 0.2);
 	display: inline-block;
 	position: absolute;
 	padding: 5px 10px 5px 10px;
@@ -607,11 +666,12 @@ a.test-arrow {
 	right: 5px;
 }
 a.test-arrow:hover{
-	background-color: #4e8bca;
 	text-decoration: none;
 }
 
-.section-header:hover a:after {
+.section-header:hover a:before {
+	position: absolute;
+	left: -25px;
 	content: '\2002\00a7\2002';
 }
 
@@ -631,6 +691,11 @@ a.test-arrow:hover{
 	top: 0;
 }
 
+h3 > .collapse-toggle, h4 > .collapse-toggle {
+	font-size: 0.8em;
+	top: 5px;
+}
+
 .toggle-wrapper > .collapse-toggle {
 	left: -24px;
 	margin-top: 0px;
@@ -638,21 +703,19 @@ a.test-arrow:hover{
 
 .toggle-wrapper {
 	position: relative;
+	margin-top: 5px;
 }
 
 .toggle-wrapper.collapsed {
-	height: 1em;
+	height: 25px;
 	transition: height .2s;
+	margin-bottom: .6em;
 }
 
 .collapse-toggle > .inner {
 	display: inline-block;
 	width: 1.2ch;
 	text-align: center;
-}
-
-.toggle-label {
-	color: #999;
 }
 
 .ghost {
@@ -669,6 +732,11 @@ a.test-arrow:hover{
 	padding-left: 10px;
 }
 
+.item-spacer {
+	width: 100%;
+	height: 12px;
+}
+
 span.since {
 	position: initial;
 	font-size: 20px;
@@ -679,12 +747,18 @@ span.since {
 	left: 0;
 }
 
-.variant + .toggle-wrapper > a {
+.variant + .toggle-wrapper + .docblock > p {
 	margin-top: 5px;
 }
 
 .sub-variant, .sub-variant > h3 {
 	margin-top: 0 !important;
+}
+
+.toggle-label {
+	display: inline-block;
+	margin-left: 4px;
+	margin-top: 3px;
 }
 
 .enum > .toggle-wrapper + .docblock, .struct > .toggle-wrapper + .docblock {
@@ -693,11 +767,20 @@ span.since {
 	margin-top: 5px;
 }
 
+.docblock > .section-header:first-child {
+	margin-left: 15px;
+	margin-top: 0;
+}
+
+.docblock > .section-header:first-child:hover > a:before {
+	left: -10px;
+}
+
 .enum > .collapsed, .struct > .collapsed {
 	margin-bottom: 25px;
 }
 
-.enum .variant, .struct .structfield {
+#main > .variant, #main > .structfield {
 	display: block;
 }
 
@@ -710,8 +793,7 @@ span.since {
 }
 
 :target > code {
-   background: #FDFFD3;
-   opacity: 1;
+	opacity: 1;
 }
 
 /* Media Queries */
@@ -722,17 +804,19 @@ span.since {
 	}
 
 	.sidebar {
-		height: 40px;
+		height: 45px;
 		min-height: 40px;
-		width: 100%;
-		margin: 0px;
-		padding: 0px;
+		width: calc(100% + 30px);
+		margin: 0;
+		margin-left: -15px;
+		padding: 0 15px;
 		position: static;
 	}
 
 	.sidebar .location {
 		float: right;
 		margin: 0px;
+		margin-top: 2px;
 		padding: 3px 10px 1px 10px;
 		min-height: 39px;
 		background: inherit;
@@ -747,7 +831,7 @@ span.since {
 	.sidebar img {
 		width: 35px;
 		margin-top: 5px;
-		margin-bottom: 0px;
+		margin-bottom: 5px;
 		float: left;
 	}
 
@@ -767,8 +851,8 @@ span.since {
 		width: 100%;
 	}
 
-	.content .out-of-band {
-		display: none;
+	.content h4 > .out-of-band {
+		position: inherit;
 	}
 
 	.toggle-wrapper > .collapse-toggle {
@@ -778,10 +862,201 @@ span.since {
 	.toggle-wrapper {
 		height: 1.5em;
 	}
+
+	#search {
+		margin-left: 0;
+	}
+
+	.content .impl-items .method, .content .impl-items > .type, .impl-items > .associatedconstant {
+		display: flex;
+	}
 }
 
 @media print {
 	nav.sub, .content .out-of-band, .collapse-toggle {
 		display: none;
 	}
+}
+
+.information {
+	position: absolute;
+	left: -20px;
+	margin-top: 7px;
+	z-index: 1;
+}
+
+.tooltip {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+	width: 120px;
+	display: none;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	padding: 5px 3px;
+	border-radius: 6px;
+	margin-left: 5px;
+	top: -5px;
+	left: 105%;
+	z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+	display: inline;
+}
+
+.tooltip .tooltiptext::after {
+	content: " ";
+	position: absolute;
+	top: 50%;
+	left: 11px;
+	margin-top: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: transparent black transparent transparent;
+}
+
+.important-traits .tooltip .tooltiptext {
+	background-color: white;
+	color: black;
+	border: 1px solid #000;
+}
+
+pre.rust {
+	position: relative;
+}
+
+.search-failed {
+	text-align: center;
+	margin-top: 20px;
+}
+
+#titles {
+	height: 35px;
+}
+
+#titles > div {
+	float: left;
+	width: 33.3%;
+	text-align: center;
+	border-bottom: 1px solid #ccc;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+#titles > div.selected {
+	border-bottom: 3px solid #0078ee;
+}
+
+#titles > div:hover {
+	border-bottom: 3px solid #0089ff;
+}
+
+#titles > div > div.count {
+	display: inline-block;
+	color: #888;
+	font-size: 16px;
+}
+
+.important-traits {
+	cursor: pointer;
+	z-index: 2;
+}
+
+h4 > .important-traits {
+	position: absolute;
+	left: -44px;
+	top: 2px;
+}
+
+.modal {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.3);
+	z-index: 10000;
+	top: 0;
+	left: 0;
+}
+
+.modal-content {
+	display: block;
+	max-width: 60%;
+	min-width: 200px;
+	background-color: #eee;
+	padding: 8px;
+	top: 40%;
+	position: absolute;
+	left: 50%;
+	transform: translate(-50%, -40%);
+	border: 1px solid #999;
+	border-radius: 4px;
+	border-top-right-radius: 0;
+}
+
+.modal-content > .docblock {
+	margin: 0;
+}
+
+h3.important {
+	margin: 0;
+	margin-bottom: 13px;
+	font-size: 19px;
+}
+
+.modal-content > .docblock > code.content {
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+}
+
+.modal-content > .close {
+	position: absolute;
+	font-weight: 900;
+	right: -25px;
+	top: -1px;
+	font-size: 18px;
+	background-color: #eee;
+	width: 25px;
+	padding-right: 2px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	text-align: center;
+	border: 1px solid #999;
+	border-right: 0;
+	cursor: pointer;
+}
+
+.modal-content > .close:hover {
+	background-color: #ff1f1f;
+	color: white;
+}
+
+.modal-content > .whiter {
+	height: 25px;
+	position: absolute;
+	width: 3px;
+	background-color: #eee;
+	right: -2px;
+	top: 0px;
+}
+
+.modal-content > .close:hover + .whiter {
+	background-color: #ff1f1f;
+}
+
+#main > div.important-traits {
+	position: absolute;
+	left: -24px;
+	margin-top: 16px;
+}
+
+.content > .methods > div.important-traits {
+	position: absolute;
+	left: -42px;
+	margin-top: 2px;
 }

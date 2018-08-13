@@ -1,11 +1,9 @@
-extern crate r2d2;
 extern crate r2d2_redis;
-extern crate redis;
 
 use std::ops::Deref;
 use std::thread;
 
-use r2d2_redis::RedisConnectionManager;
+use r2d2_redis::{r2d2, redis, RedisConnectionManager};
 
 fn main() {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();

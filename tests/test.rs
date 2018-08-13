@@ -1,11 +1,9 @@
-extern crate redis;
-extern crate r2d2;
 extern crate r2d2_redis;
 
 use std::sync::mpsc;
 use std::thread;
 
-use r2d2_redis::RedisConnectionManager;
+use r2d2_redis::{r2d2, RedisConnectionManager};
 
 #[test]
 fn test_basic() {

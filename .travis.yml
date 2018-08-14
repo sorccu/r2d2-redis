@@ -13,6 +13,3 @@ services:
 script:
 - cargo test
 - cargo doc --no-deps
-
-after_success:
-- .travis/gh-pages.sh

@@ -10,19 +10,13 @@ authors = [
 license = "MIT"
 description = "Redis support for the r2d2 connection pool"
 repository = "https://github.com/sorccu/r2d2-redis"
-documentation = "https://sorccu.github.io/r2d2-redis/doc/v0.6.0/r2d2_redis/"
+documentation = "https://docs.rs/r2d2_redis/0.7.0"
 keywords = ["redis", "pool", "database", "r2d2"]
 include = ["src/**/*", "LICENSE", "Cargo.toml"]
-
-[lib]
-name = "r2d2_redis"
-path = "src/lib.rs"
-test = false
-
-[[test]]
-name = "test"
-path = "tests/test.rs"
 
 [dependencies]
 r2d2 = "0.8"
 redis = "0.9"
+
+[dev-dependencies]
+version-sync = "0.5"

@@ -31,15 +31,12 @@ This example shows a standard use case with convenience methods provided by `red
 Run with `cargo run --example counter`:
 
 ```rust
-extern crate r2d2;
 extern crate r2d2_redis;
-extern crate redis;
 
 use std::thread;
 
-use r2d2_redis::RedisConnectionManager;
-
-use redis::Commands;
+use r2d2_redis::{r2d2, RedisConnectionManager};
+use r2d2_redis::redis::Commands;
 
 fn main() {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
@@ -71,14 +68,12 @@ Unfortunately there are cases when the `Deref` trait cannot be used. This usuall
 Run with `cargo run --example ping`:
 
 ```rust
-extern crate r2d2;
 extern crate r2d2_redis;
-extern crate redis;
 
 use std::ops::Deref;
 use std::thread;
 
-use r2d2_redis::RedisConnectionManager;
+use r2d2_redis::{r2d2, redis, RedisConnectionManager};
 
 fn main() {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();

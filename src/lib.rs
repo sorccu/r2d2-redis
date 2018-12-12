@@ -14,6 +14,9 @@ use std::fmt;
 pub enum Error {
     /// A redis::RedisError
     Other(redis::RedisError),
+
+    /// inner redis::Connection reports being closed
+    ConnectionClosed,
 }
 
 impl fmt::Display for Error {
@@ -28,13 +31,15 @@ impl fmt::Display for Error {
 impl error::Error for Error {
     fn description(&self) -> &str {
         match *self {
-            Error::Other(ref err) => err.description()
+            Error::Other(ref err) => err.description(),
+            Error::ConnectionClosed => "inner redis::Connection reports being closed",
         }
     }
 
     fn cause(&self) -> Option<&error::Error> {
         match *self {
-            Error::Other(ref err) => err.cause()
+            Error::Other(ref err) => err.cause(),
+            Error::ConnectionClosed => None,
         }
     }
 }
@@ -78,7 +83,7 @@ impl error::Error for Error {
 /// ```
 #[derive(Debug)]
 pub struct RedisConnectionManager {
-    connection_info: redis::ConnectionInfo
+    connection_info: redis::ConnectionInfo,
 }
 
 impl RedisConnectionManager {
@@ -86,8 +91,9 @@ impl RedisConnectionManager {
     ///
     /// See `redis::Client::open` for a description of the parameter
     /// types.
-    pub fn new<T: redis::IntoConnectionInfo>(params: T)
-            -> Result<RedisConnectionManager, redis::RedisError> {
+    pub fn new<T: redis::IntoConnectionInfo>(
+        params: T,
+    ) -> Result<RedisConnectionManager, redis::RedisError> {
         Ok(RedisConnectionManager {
             connection_info: try!(params.into_connection_info()),
         })
@@ -100,18 +106,20 @@ impl r2d2::ManageConnection for RedisConnectionManager {
 
     fn connect(&self) -> Result<redis::Connection, Error> {
         match redis::Client::open(self.connection_info.clone()) {
-            Ok(client) => {
-                client.get_connection().map_err(Error::Other)
-            },
-            Err(err) => Err(Error::Other(err))
+            Ok(client) => client.get_connection().map_err(Error::Other),
+            Err(err) => Err(Error::Other(err)),
         }
     }
 
     fn is_valid(&self, conn: &mut redis::Connection) -> Result<(), Error> {
-        redis::cmd("PING").query(conn).map_err(Error::Other)
+        if conn.is_open() {
+            Ok(())
+        } else {
+            Err(Error::ConnectionClosed)
+        }
     }
 
-    fn has_broken(&self, _conn: &mut redis::Connection) -> bool {
-        false
+    fn has_broken(&self, conn: &mut redis::Connection) -> bool {
+        !conn.is_open()
     }
 }

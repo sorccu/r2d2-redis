@@ -14,9 +14,6 @@ use std::fmt;
 pub enum Error {
     /// A redis::RedisError
     Other(redis::RedisError),
-
-    /// inner redis::Connection reports being closed
-    ConnectionClosed,
 }
 
 impl fmt::Display for Error {
@@ -32,14 +29,12 @@ impl error::Error for Error {
     fn description(&self) -> &str {
         match *self {
             Error::Other(ref err) => err.description(),
-            Error::ConnectionClosed => "inner redis::Connection reports being closed",
         }
     }
 
     fn cause(&self) -> Option<&error::Error> {
         match *self {
             Error::Other(ref err) => err.cause(),
-            Error::ConnectionClosed => None,
         }
     }
 }
@@ -112,11 +107,7 @@ impl r2d2::ManageConnection for RedisConnectionManager {
     }
 
     fn is_valid(&self, conn: &mut redis::Connection) -> Result<(), Error> {
-        if conn.is_open() {
-            Ok(())
-        } else {
-            Err(Error::ConnectionClosed)
-        }
+        redis::cmd("PING").query(conn).map_err(Error::Other)
     }
 
     fn has_broken(&self, conn: &mut redis::Connection) -> bool {

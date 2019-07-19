@@ -16,7 +16,7 @@ include = ["src/**/*", "LICENSE", "Cargo.toml"]
 
 [dependencies]
 r2d2 = "0.8"
-redis = "0.10"
+redis = "0.11"
 
 [dev-dependencies]
 version-sync = "0.5"

@@ -18,6 +18,7 @@ pub enum Error {
 
 impl fmt::Display for Error {
     fn fmt(&self, fmt: &mut fmt::Formatter) -> fmt::Result {
+        #[allow(deprecated)] // `cause` is replaced by `Error:source` in 1.33
         match self.cause() {
             Some(cause) => write!(fmt, "{}: {}", self.description(), cause),
             None => write!(fmt, "{}", self.description()),
@@ -34,7 +35,10 @@ impl error::Error for Error {
 
     fn cause(&self) -> Option<&error::Error> {
         match *self {
-            Error::Other(ref err) => err.cause(),
+            Error::Other(ref err) => {
+                #[allow(deprecated)] // `cause` is replaced by `Error:source` in 1.33
+                err.cause()
+            },
         }
     }
 }

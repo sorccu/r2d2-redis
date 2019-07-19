@@ -12,9 +12,9 @@ fi
 
 for file in Cargo.toml README.md src/lib.rs; do
     sed -i.bak -E \
-        -e "s|version=${PREV_VERSION}|version=${NEW_VERSION}|g" \
-        -e "s|r2d2_redis/${PREV_VERSION}|r2d2_redis/${NEW_VERSION}|g" \
-        -e "s|r2d2_redis = \"${PREV_VERSION}\"|r2d2_redis = \"${NEW_VERSION}\"|g" \
+        -e "s|version=[0-9.]+|version=${NEW_VERSION}|g" \
+        -e "s|r2d2_redis/[0-9.]+|r2d2_redis/${NEW_VERSION}|g" \
+        -e "s|r2d2_redis = \"[0-9.]+\"|r2d2_redis = \"${NEW_VERSION}\"|g" \
         "${CRATE_ROOT}/$file"
     rm "${CRATE_ROOT}/$file.bak"
 done

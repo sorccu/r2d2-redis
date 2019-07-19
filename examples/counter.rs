@@ -17,7 +17,7 @@ fn main() {
     for _i in 0..10i32 {
         let pool = pool.clone();
         handles.push(thread::spawn(move || {
-            let conn = pool.get().unwrap();
+            let mut conn = pool.get().unwrap();
             let n: i64 = conn.incr("counter", 1).unwrap();
             println!("Counter increased to {}", n);
         }));

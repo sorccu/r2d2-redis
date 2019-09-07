@@ -33,7 +33,7 @@ impl error::Error for Error {
         }
     }
 
-    fn cause(&self) -> Option<&error::Error> {
+    fn cause(&self) -> Option<&dyn error::Error> {
         match *self {
             Error::Other(ref err) => {
                 #[allow(deprecated)] // `cause` is replaced by `Error:source` in 1.33
@@ -94,7 +94,7 @@ impl RedisConnectionManager {
         params: T,
     ) -> Result<RedisConnectionManager, redis::RedisError> {
         Ok(RedisConnectionManager {
-            connection_info: try!(params.into_connection_info()),
+            connection_info: params.into_connection_info()?,
         })
     }
 }

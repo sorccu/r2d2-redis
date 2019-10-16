@@ -342,7 +342,7 @@ name = "r2d2_redis"
 version = "0.11.1-alpha.0"
 dependencies = [
  "r2d2 0.8.5 (registry+https://github.com/rust-lang/crates.io-index)",
- "redis 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "redis 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -451,7 +451,7 @@ dependencies = [
 
 [[package]]
 name = "redis"
-version = "0.12.0"
+version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "bytes 0.4.12 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -751,7 +751,7 @@ dependencies = [
 "checksum rand_pcg 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "abf9b09b01790cfe0364f52bf32995ea3c39f4d2dd011eac241d2914146d0b44"
 "checksum rand_xorshift 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "cbf7e9e623549b0e21f6e97cf8ecf247c1a8fd2e8a992ae265314300b2455d5c"
 "checksum rdrand 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)" = "678054eb77286b51581ba43620cc911abf02758c91f93f479767aed0f90458b2"
-"checksum redis 0.12.0 (registry+https://github.com/rust-lang/crates.io-index)" = "292057bfe9f60d877816c916630c957460fbe30b15f26103702f6ac2a2358a35"
+"checksum redis 0.13.0 (registry+https://github.com/rust-lang/crates.io-index)" = "9bb1079bc5692c03e1479bb7086ac870ac2aaf7115b5e72d314c01368f1a747e"
 "checksum redox_syscall 0.1.56 (registry+https://github.com/rust-lang/crates.io-index)" = "2439c63f3f6139d1b57529d16bc3b8bb855230c8efcc5d3a896c8bea7c3b1e84"
 "checksum rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)" = "138e3e0acb6c9fb258b19b67cb8abd63c00679d2851805ea151465464fe9030a"
 "checksum scheduled-thread-pool 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "bd07742e081ff6c077f5f6b283f12f32b9e7cc765b316160d66289b74546fbb3"

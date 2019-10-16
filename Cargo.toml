@@ -1,6 +1,6 @@
 [package]
 name = "r2d2_redis"
-version = "0.11.1-alpha.0"
+version = "0.12.0"
 authors = [
     "Steven Fackler <sfackler@gmail.com>",
     "Nev Delap <nevdelap@gmail.com>",
@@ -10,7 +10,7 @@ authors = [
 license = "MIT"
 description = "Redis support for the r2d2 connection pool"
 repository = "https://github.com/sorccu/r2d2-redis"
-documentation = "https://docs.rs/r2d2_redis/0.11.0"
+documentation = "https://docs.rs/r2d2_redis/0.12.0"
 keywords = ["redis", "pool", "database", "r2d2"]
 include = ["src/**/*", "LICENSE", "Cargo.toml"]
 

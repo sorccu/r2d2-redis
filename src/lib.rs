@@ -1,5 +1,5 @@
 //! Redis support for the `r2d2` connection pool.
-#![doc(html_root_url = "https://docs.rs/r2d2_redis/0.11.0")]
+#![doc(html_root_url = "https://docs.rs/r2d2_redis/0.12.0")]
 #![warn(missing_docs)]
 
 pub extern crate r2d2;

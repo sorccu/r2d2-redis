@@ -1,9 +1,9 @@
 extern crate r2d2_redis;
 
+use r2d2_redis::{r2d2, redis, RedisConnectionManager};
+use redis::Commands;
 use std::sync::mpsc;
 use std::thread;
-
-use r2d2_redis::{r2d2, RedisConnectionManager};
 
 #[test]
 fn test_basic() {
@@ -48,4 +48,19 @@ fn test_is_valid() {
         .unwrap();
 
     pool.get().unwrap();
+}
+
+#[test]
+fn test_counter() {
+    let manager = RedisConnectionManager::new("redis://localhost").unwrap();
+    let pool = r2d2::Pool::builder()
+        .build(manager)
+        .unwrap();
+
+    let mut conn = pool.get().unwrap();
+
+    conn.set::<&str, i64, String>("counter", 41).unwrap();
+
+    let n: i64 = conn.incr("counter", 1).unwrap();
+    assert_eq!(n, 42);
 }

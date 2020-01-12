@@ -15,5 +15,5 @@ keywords = ["redis", "pool", "database", "r2d2"]
 include = ["src/**/*", "LICENSE", "Cargo.toml"]
 
 [dependencies]
-r2d2 = "0.8"
-redis = "0.13"
+r2d2 = "0.8.8"
+redis = "0.14.0"

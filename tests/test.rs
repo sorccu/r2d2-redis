@@ -8,10 +8,7 @@ use r2d2_redis::{r2d2, RedisConnectionManager};
 #[test]
 fn test_basic() {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
-    let pool = r2d2::Pool::builder()
-        .max_size(2)
-        .build(manager)
-        .unwrap();
+    let pool = r2d2::Pool::builder().max_size(2).build(manager).unwrap();
 
     let (s1, r1) = mpsc::channel();
     let (s2, r2) = mpsc::channel();

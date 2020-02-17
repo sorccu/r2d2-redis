@@ -277,7 +277,7 @@ dependencies = [
 
 [[package]]
 name = "r2d2_redis"
-version = "0.12.1-alpha.0"
+version = "0.13.0"
 dependencies = [
  "r2d2 0.8.8 (registry+https://github.com/rust-lang/crates.io-index)",
  "redis 0.15.1 (registry+https://github.com/rust-lang/crates.io-index)",

@@ -9,6 +9,8 @@ use std::error;
 use std::error::Error as _StdError;
 use std::fmt;
 
+use redis::ConnectionLike;
+
 /// A unified enum of errors returned by redis::Client
 #[derive(Debug)]
 pub enum Error {

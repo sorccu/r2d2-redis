@@ -8,9 +8,7 @@ use redis::Commands;
 
 fn main() {
     let manager = RedisConnectionManager::new("redis://localhost").unwrap();
-    let pool = r2d2::Pool::builder()
-        .build(manager)
-        .unwrap();
+    let pool = r2d2::Pool::builder().build(manager).unwrap();
 
     let mut handles = vec![];
 

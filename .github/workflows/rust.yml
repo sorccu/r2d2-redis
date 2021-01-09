@@ -1,0 +1,26 @@
+name: Rust
+
+on:
+  push:
+    branches: [ feature/*, develop, master ]
+  pull_request:
+    branches: [ develop, master ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: shogo82148/actions-setup-redis@v1
+      with:
+        redis-version: '6.x'
+    - run: redis-cli ping
+    - name: Build
+      run: cargo build --verbose
+    - name: Run tests
+      run: cargo test --verbose

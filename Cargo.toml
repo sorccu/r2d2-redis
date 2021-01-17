@@ -16,4 +16,4 @@ include = ["src/**/*", "LICENSE", "Cargo.toml"]
 
 [dependencies]
 r2d2 = "0.8.9"
-redis = "0.19.0"
+redis = { version = "0.19.0", features = ["streams"] }

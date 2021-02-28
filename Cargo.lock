@@ -179,7 +179,7 @@ dependencies = [
 
 [[package]]
 name = "r2d2_redis"
-version = "0.13.1-alpha.0"
+version = "0.14.0"
 dependencies = [
  "r2d2",
  "redis",

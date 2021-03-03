@@ -1,9 +1,9 @@
 extern crate r2d2_redis;
 
+use r2d2_redis::{r2d2, redis, RedisConnectionManager};
+use redis::Commands;
 use std::sync::mpsc;
 use std::thread;
-
-use r2d2_redis::{r2d2, RedisConnectionManager};
 
 #[test]
 fn test_basic() {
@@ -48,4 +48,42 @@ fn test_is_valid() {
         .unwrap();
 
     pool.get().unwrap();
+}
+
+#[test]
+fn test_counter() {
+    let manager = RedisConnectionManager::new("redis://localhost").unwrap();
+    let pool = r2d2::Pool::builder()
+        .build(manager)
+        .unwrap();
+
+    let mut conn = pool.get().unwrap();
+
+    conn.set::<&str, i64, String>("counter", 41).unwrap();
+
+    let n: i64 = conn.incr("counter", 1).unwrap();
+    assert_eq!(n, 42);
+}
+
+#[test]
+fn test_threaded_ping() {
+    let manager = RedisConnectionManager::new("redis://localhost").unwrap();
+    let pool = r2d2::Pool::builder()
+        .build(manager)
+        .unwrap();
+
+    let mut handles = vec![];
+
+    for _i in 0..10i32 {
+        let pool = pool.clone();
+        handles.push(thread::spawn(move || {
+            let mut conn = pool.get().unwrap();
+            let reply = redis::cmd("PING").query::<String>(&mut *conn).unwrap();
+            assert_eq!("PONG", reply);
+        }));
+    }
+
+    for h in handles {
+        h.join().unwrap();
+    }
 }

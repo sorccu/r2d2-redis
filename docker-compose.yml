@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+
+  redis:
+    image: redis:6.0-rc1
+    container_name: r2d2-redis
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+    volumes:
+      - r2d2_redis:/data
+
+volumes:
+  r2d2_redis:
+    external: true

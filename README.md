@@ -99,3 +99,14 @@ fn main() {
     }
 }
 ```
+
+# Testing
+
+A running redis database is required for tests to execute. You can get your own instance manually
+ or you can use docker & docker-compose we provide. Example:
+
+```bash
+./scripts/volume-up.sh
+docker-compose up -d
+cargo test
+```

@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - directory: /
+    package-ecosystem: github-actions
+    schedule:
+      interval: daily
+  - directory: /
+    package-ecosystem: cargo
+    rebase-strategy: auto
+    schedule:
+      # Binaries should have a sparser interval since they care about patches/minor updates
+      interval: daily
+    ignore:
+      - dependency-name: "*"
+        # Patches and minor updates do not matter for libraries,
+        # do not ignore this in binaries
+        update-types:
+          - "version-update:semver-patch"
+          - "version-update:semver-minor"

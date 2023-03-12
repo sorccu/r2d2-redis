@@ -1,16 +1,15 @@
-extern crate r2d2_redis;
-
+use r2d2_redis::{r2d2, redis, RedisConnectionManager};
+use redis::Commands;
 use std::thread;
 
-use r2d2_redis::{r2d2, redis, RedisConnectionManager};
-
-use redis::Commands;
-
 fn main() {
-    let manager = RedisConnectionManager::new("redis://localhost").unwrap();
-    let pool = r2d2::Pool::builder()
-        .build(manager)
-        .unwrap();
+    let (host, port) = (
+        std::env::var("REDIS_HOST").unwrap(),
+        std::env::var("REDIS_PORT").unwrap(),
+    );
+    let uri = format!("redis://{host}:{port}");
+    let manager = RedisConnectionManager::new(uri).unwrap();
+    let pool = r2d2::Pool::builder().build(manager).unwrap();
 
     let mut handles = vec![];
 

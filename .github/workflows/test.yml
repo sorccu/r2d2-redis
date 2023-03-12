@@ -1,0 +1,46 @@
+on:
+  push:
+    branches: [master]
+  pull_request:
+name: test
+jobs:
+  required:
+    runs-on: ubuntu-latest
+    name: ubuntu / ${{ matrix.toolchain }}
+    strategy:
+      matrix:
+        toolchain: [stable, beta]
+
+    services:
+      redis:
+        # Docker Hub image
+        image: redis
+        # Set health checks to wait until redis has started
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 6379:6379
+
+    steps:
+      - name: "Check out code"
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install ${{ matrix.toolchain }}
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: ${{ matrix.toolchain }}
+        # Creates a lock file if one is not checked in
+      - name: Create lock file
+        if: hashFiles('Cargo.lock') == ''
+        run: cargo generate-lockfile
+
+      - name: cargo test --locked
+        run: cargo test --locked --all-features --all-targets
+        env:
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379

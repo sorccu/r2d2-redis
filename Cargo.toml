@@ -1,19 +1,20 @@
 [package]
-name = "r2d2_redis"
-version = "0.14.1-alpha.0"
 authors = [
-    "Steven Fackler <sfackler@gmail.com>",
+    "Biblius Khan <crazycompanyxxl@gmail.com>",
+    "Jan-Erik Rediger <janerik@fnordig.de>",
     "Nev Delap <nevdelap@gmail.com>",
     "Simo Kinnunen <simo@shoqolate.com>",
-    "Jan-Erik Rediger <janerik@fnordig.de>"
+    "Steven Fackler <sfackler@gmail.com>",
 ]
-license = "MIT"
 description = "Redis support for the r2d2 connection pool"
-repository = "https://github.com/sorccu/r2d2-redis"
-documentation = "https://docs.rs/r2d2_redis/0.14.0"
-keywords = ["redis", "pool", "database", "r2d2"]
-include = ["src/**/*", "LICENSE", "Cargo.toml"]
+edition = "2021"
+include = ["Cargo.toml", "LICENSE", "src/**/*"]
+keywords = ["database", "pool", "r2d2", "redis"]
+license = "MIT"
+name = "r2d2_redis"
+repository = "https://github.com/biblius/r2d2-redis"
+version = "0.14.1"
 
 [dependencies]
-r2d2 = "0.8"
-redis = "0.20.0"
+r2d2 = "0.8.1"
+redis = "0.22.3"
